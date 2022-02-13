@@ -16,6 +16,8 @@ videoRouter.route("/:id([0-9a-f]{24})/edit").all(protectorMiddleware).get(getEdi
 //videoRouter.get("/:id([0-9a-f]{24})/edit", getEdit);
 //videoRouter.post("/:id([0-9a-f]{24})/edit", postEdit);
 videoRouter.route("/:id([0-9a-f]{24})/delete").all(protectorMiddleware).get(deleteVideo);
-videoRouter.route("/upload").all(protectorMiddleware).get(getUpload).post(videoUpload.single("video"),postUpload);
+                                                                                    //fields 두개이상가능
+videoRouter.route("/upload").all(protectorMiddleware).get(getUpload).post(videoUpload.fields([{ name: "video" }, { name: "thumb" }]), postUpload);
+
 
 export default videoRouter;

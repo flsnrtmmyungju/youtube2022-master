@@ -128,7 +128,10 @@ export const finishGithubLogin = async (req, res) => {
 };
 
 export const logout = (req, res) => {
-  req.session.destroy();
+  req.session.user = null;
+  res.locals.loggedInUser = req.session.user;
+  req.session.loggedIn = false;
+  req.flash("info", "Bye Bye");
   return res.redirect("/");
 };
 
@@ -143,7 +146,6 @@ export const postEdit = async (req, res) => {
         //body안의 정보가져오기
         body: { name, email, username, location },file,
   } = req;
-  console.log(file);
   const exists = await User.exists({
     _id: { $ne: { _id } },
     $or: [{ username }, { email }],
@@ -165,6 +167,7 @@ export const postEdit = async (req, res) => {
 
 export const getChangePassword = (req, res) => {
   if (req.session.user.socialOnly === true) {
+    req.flash("error", "Can't change password.");
     return res.redirect("/");
   }
   return res.render("users/change-password", { pageTitle: "Change Password" });
@@ -193,7 +196,25 @@ export const postChangePassword = async (req, res) => {
   }
   user.password = newPassword;
   await user.save();//user모델의 userSchema.pre("save" 부분실행
+  req.flash("info", "Password updated");
   return res.redirect("/users/logout");
 };
 
-export const see = (req, res) => res.send("See User");
+export const see = async (req, res) => {
+  const { id } = req.params;
+   //해당 사람의 모든 동영상불러오기
+  const user = await User.findById(id).populate({
+    path: "videos",
+    populate: {//double populate
+      path: "owner",
+      model: "User",
+    },
+  });
+  if (!user) {
+    return res.status(404).render("404", { pageTitle: "User not found." });
+  }
+   return res.render("users/profile", {
+    pageTitle: user.name,
+    user, 
+  });
+};

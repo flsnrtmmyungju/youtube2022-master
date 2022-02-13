@@ -20,6 +20,6 @@ userRouter.route("/change-password").all(protectorMiddleware).get(getChangePassw
 userRouter.get("/github/start", publicOnlyMiddleware, startGithubLogin);
 userRouter.get("/github/finish", publicOnlyMiddleware, finishGithubLogin);
 //:의 변수를 위에두면 그아래에 있는 리스트들을 전부 변수로봄
-userRouter.get(":id", see);
+userRouter.get("/:id", see);
 
 export default userRouter;

@@ -8,7 +8,7 @@ import rootRouter from "./routers/rootRouter";
 import videoRouter from "./routers/videoRouter";
 import userRouter from "./routers/userRouter";
 import apiRouter from "./routers/apiRouter";
-import { localsMiddleware } from "./middlewares";
+import { localsMiddleware ,s3DeleteAvatarMiddleware} from "./middlewares";
 
 const app = express();//순서는 use - > get 순이다express는 위에서아래로실행
 app.set("view engine", "pug");
@@ -46,6 +46,7 @@ app.use((req, res, next) => {
 //     next();
 //   });
 // });
+app.use(s3DeleteAvatarMiddleware);
 app.use(flash());
 app.use(localsMiddleware);//위치중요
 app.use("/uploads", express.static("uploads"));//폴더전체를브라우저에노출

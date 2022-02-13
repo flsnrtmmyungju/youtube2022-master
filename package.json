@@ -26,7 +26,9 @@
     "node-fetch": "^2.6.1",
     "pug": "^3.0.2",
     "regenerator-runtime": "^0.13.9",
-    "upgrade": "^1.1.0"
+    "upgrade": "^1.1.0",
+    "webpack": "^5.67.0",
+    "webpack-cli": "^4.9.2"
   },
   "devDependencies": {
     "@babel/cli": "^7.17.0",
@@ -40,8 +42,6 @@
     "nodemon": "^2.0.15",
     "sass": "^1.49.0",
     "sass-loader": "^12.4.0",
-    "style-loader": "^3.3.1",
-    "webpack": "^5.67.0",
-    "webpack-cli": "^4.9.2"
+    "style-loader": "^3.3.1"
   }
 }

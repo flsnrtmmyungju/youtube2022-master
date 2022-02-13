@@ -48,8 +48,10 @@ const formatTime = (seconds) =>new Date(seconds * 1000).toISOString().substring(
 
 const handleLoadedMetadata = () => {
     // Math.floor 소수점제거
+  if (!isNaN(video.duration)) {
   totalTime.innerText = formatTime(Math.floor(video.duration));
   timeline.max = Math.floor(video.duration);
+  }
 };
 
 const handleTimeUpdate = () => {
@@ -152,3 +154,5 @@ videoContainer.addEventListener("mouseleave", handleMouseLeave);
 fullScreenBtn.addEventListener("click", handleFullscreen);
 document.addEventListener("keydown", handlekeyDown, false);
 video.addEventListener("click", handleMouseClick);
+video.addEventListener("canplay", handleLoadedMetadata);
+handleLoadedData();

@@ -158,7 +158,7 @@ export const postEdit = async (req, res) => {
     });
   }
   const updatedUser = await User.findByIdAndUpdate(
-    _id,{avatarUrl: file ? file.path : avatarUrl,name,email,username,location,},{ new: true }//{ new: true }:가장최근에업데이트된데이터가져옴
+    _id,{avatarUrl: file ? file.location : avatarUrl,name,email,username,location,},{ new: true }//{ new: true }:가장최근에업데이트된데이터가져옴
   );
   //req.session.user = {...req.session.user,name등등등}수동으로업데이트
   req.session.user = updatedUser;
